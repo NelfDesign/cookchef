@@ -1,16 +1,23 @@
+import { useState } from "react";
 import styles from "./Recipe.module.scss";
-import recipe from "../assets/images/duck.jpg";
 
-function Recipe() {
+function Recipe({ title, image }) {
+  const [liked, setLiked] = useState(false);
+
+  function handleLiked() {
+    setLiked(!liked);
+  }
+
   return (
-    <div className={styles.recipe}>
+    <div onClick={handleLiked} className={styles.recipe}>
       <div className={styles.imageContainer}>
-        <img src={recipe} alt="recipe" />
+        <img src={image} alt="recipe" />
       </div>
       <div
-        className={`${styles.recipeTitle} d-flex flex-row justify-content-center align-items-center`}
+        className={`${styles.recipeTitle} d-flex flex-column justify-content-center align-items-center`}
       >
-        <h3>Canard et pomme de terre</h3>
+        <h3 className="mb-10">{title}</h3>
+        <i className={`fa-solid fa-heart ${liked ? "text-primary" : ""}`}></i>
       </div>
     </div>
   );
