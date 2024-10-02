@@ -1,11 +1,27 @@
-import { useState } from "react";
+import { useContext } from "react";
 import styles from "./Recipe.module.scss";
+import { ApiContext } from "../../../Context/ApiContext";
 
-function Recipe({ title, image }) {
-  const [liked, setLiked] = useState(false);
-
-  function handleLiked() {
-    setLiked(!liked);
+function Recipe({ recipe: { title, _id, liked, image }, toggleLikerecipe }) {
+  const BASE_URL = useContext(ApiContext);
+  async function handleLiked() {
+    try {
+      const response = await fetch(`${BASE_URL}/${_id}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          liked: !liked,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const recipe = await response.json();
+        toggleLikerecipe(recipe);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
