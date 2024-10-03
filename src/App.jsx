@@ -2,15 +2,19 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import HomePage from "./pages/homePage/HomePage";
 import styles from "./App.module.scss";
-//import { seedRecipes } from "./data/seeds";
+import { useState } from "react";
+import Admin from "./pages/Admin/Admin";
+// import { seedRecipes } from "./data/seeds";
 
-//seedRecipes();
+// seedRecipes();
 
 function App() {
+  const [page, setPage] = useState("homePage");
   return (
     <div className={`d-flex flex-column ${styles.appContainer}`}>
-      <Header />
-      <HomePage />
+      <Header setPage={setPage} />
+      {page === "homePage" && <HomePage />}
+     {page === "admin" && <Admin />} 
       <Footer />
     </div>
   );
